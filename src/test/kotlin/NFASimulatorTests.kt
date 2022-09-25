@@ -2,18 +2,19 @@ import org.junit.jupiter.api.Test
 import java.io.File
 import java.util.*
 import kotlin.test.assertEquals
+import Utility.getIntListFromScanner
+import Utility.readAutomate
 
-class Tests {
+class NFASimulatorTests {
     private val AUTOMATES_LOCATION = "testData/automates/"
     private val INPUTS_LOCATION = "testData/inputs/"
 
     fun test(testFilename: String) {
-        val input = Scanner(File(INPUTS_LOCATION + testFilename))
-        while (input.hasNextLine()) {
-            val sInp = getIntListFromScanner(input)
+        val scanner = Scanner(File(INPUTS_LOCATION + testFilename))
+        while (scanner.hasNextLine()) {
             assertEquals(
-                input.nextLine().toBoolean(),
-                simulateAutomate(AUTOMATES_LOCATION + testFilename, sInp)
+                scanner.nextLine().toBoolean(),
+                readAutomate(AUTOMATES_LOCATION + testFilename).simulate(getIntListFromScanner(scanner))
             )
         }
     }
